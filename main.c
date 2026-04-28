@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
+#include "listfiles.h"
+
 struct FileStats{
         int words;
         int chars;
@@ -7,6 +10,17 @@ struct FileStats{
     };
 
 int main(int argc, char *argv[]) {
+    int verbose = 0;
+    for (int i =1; i < argc; i++){
+    if (strcmp(argv[i], "--verbose") == 0){
+        verbose = 1;
+    }
+    if (strcmp(argv[i], "--list") == 0){
+        list_directory();
+        return 0;
+    } 
+
+
     struct FileStats totals = {0, 0, 0}; 
     
     for ( int i = 1; i < argc; i++){
