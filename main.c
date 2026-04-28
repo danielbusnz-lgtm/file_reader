@@ -1,23 +1,24 @@
 #include <stdio.h>
 #include <ctype.h>
+struct FileStats{
+        int words;
+        int chars;
+        int lines;
+    };
 
 int main(int argc, char *argv[]) {
-    int totalWords = 0;
-    int totalChars = 0;
-    int totalLines = 0;
-
+    struct FileStats totals = {0, 0, 0}; 
+    
     for ( int i = 1; i < argc; i++){
-        
+        struct FileStats fileStats = {0,0,0};
+ 
         
 
         char buffer[100];
         int bufferIndex = 0;
-        int counter = 0;
         int isInside = 0;
         int c;
-        int charCounter = 0;
-        int lineCounter = 0;
-
+    
 
         FILE *file = fopen(argv[i], "r");
 
@@ -27,7 +28,7 @@ int main(int argc, char *argv[]) {
         }
 
         while ((c = fgetc(file)) != EOF){
-             if (c == '\n'){lineCounter ++;}
+             if (c == '\n'){fileStats.lines ++;}
 
              if (isspace(c)){
                  if (isInside ==1 ){
@@ -37,12 +38,12 @@ int main(int argc, char *argv[]) {
              }
              isInside = 0;
             } else {
-                 charCounter ++;
+                 fileStats.chars ++;
                  buffer[bufferIndex] = c;
                  bufferIndex ++;
 
                  if (isInside == 0){
-                     counter ++;
+                     fileStats.words ++;
                      isInside = 1;
                    }
              }
@@ -52,12 +53,14 @@ int main(int argc, char *argv[]) {
             printf("word: %s\n", buffer);
         }
 
-        fclose(file); 
-        printf("%s: %d words, %d characters, %d lines\n",argv[i], counter, charCounter, lineCounter);
-        totalWords += counter;
-        totalChars += charCounter;
-        totalLines += lineCounter;
+        fclose(file);
+        printf("%s: %d words, %d characters, %d lines\n",argv[i], fileStats.words, fileStats.chars, fileStats.lines);
+
+        totals.words += fileStats.words;
+        totals.chars += fileStats.chars;
+        totals.lines += fileStats.lines;
     }
-    printf("total: %d words, %d characters, %d lines\n", totalWords, totalChars, totalLines);
+
+    printf("total: %d words, %d characters, %d lines\n", totals.words, totals.chars, totals.lines);
     return 0;
 }
