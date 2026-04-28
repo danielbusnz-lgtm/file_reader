@@ -4,5 +4,5 @@
 # Project Name
 File Reader
 
-## Features
+## Why I built this
 jsut a small file reader script I made. Its my first c program and wanted to learn about how the syntax. 
