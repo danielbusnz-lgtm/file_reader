@@ -2,7 +2,14 @@
 #include <ctype.h>
 
 int main(int argc, char *argv[]) {
+    int totalWords = 0;
+    int totalChars = 0;
+    int totalLines = 0;
+
     for ( int i = 1; i < argc; i++){
+        
+        
+
         char buffer[100];
         int bufferIndex = 0;
         int counter = 0;
@@ -47,6 +54,10 @@ int main(int argc, char *argv[]) {
 
         fclose(file); 
         printf("%s: %d words, %d characters, %d lines\n",argv[i], counter, charCounter, lineCounter);
+        totalWords += counter;
+        totalChars += charCounter;
+        totalLines += lineCounter;
     }
+    printf("total: %d words, %d characters, %d lines\n", totalWords, totalChars, totalLines);
     return 0;
 }
